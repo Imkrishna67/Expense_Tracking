@@ -10,37 +10,16 @@ import Analytics from './pages/Analytics'
 import ProfileSettings from './pages/ProfileSettings'
 import './App.css'
 
-const isLoggedIn = () => {
+function ProtectedRoute({ children }) {
   const token = localStorage.getItem('token')
 
-  return (
-    token &&
-    token !== 'undefined' &&
-    token !== 'null' &&
-    token.trim() !== ''
-  )
-}
-
-function ProtectedRoute({ children }) {
-  if (!isLoggedIn()) {
-    return <Navigate to="/auth" replace />
-  }
-
-  return children
-}
-
-function AuthRedirect({ children }) {
-  if (isLoggedIn()) {
-    return <Navigate to="/dashboard" replace />
-  }
-
-  return children
+  return token ? children : <Navigate to="/auth" replace />
 }
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: isLoggedIn()
+    element: localStorage.getItem('token')
       ? <Navigate to="/dashboard" replace />
       : (
         <PagesWrapper>
@@ -54,16 +33,16 @@ const router = createBrowserRouter([
 
   {
     path: '/auth',
-    element: (
-      <AuthRedirect>
+    element: localStorage.getItem('token')
+      ? <Navigate to="/dashboard" replace />
+      : (
         <PagesWrapper>
           <Header />
           <RouteTransition>
             <AuthPage />
           </RouteTransition>
         </PagesWrapper>
-      </AuthRedirect>
-    ),
+      ),
   },
 
   {
