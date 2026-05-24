@@ -10,83 +10,132 @@ import Analytics from './pages/Analytics'
 import ProfileSettings from './pages/ProfileSettings'
 import './App.css'
 
-function ProtectedRoute({ element }) {
+const isLoggedIn = () => {
   const token = localStorage.getItem('token')
 
-  if (!token || token === 'undefined' || token === 'null') {
-    localStorage.removeItem('token')
+  return (
+    token &&
+    token !== 'undefined' &&
+    token !== 'null' &&
+    token.trim() !== ''
+  )
+}
+
+function ProtectedRoute({ children }) {
+  if (!isLoggedIn()) {
     return <Navigate to="/auth" replace />
   }
 
-  return element
+  return children
 }
 
-function AuthRedirect({ element }) {
-  const token = localStorage.getItem('token')
-
-  if (token && token !== 'undefined' && token !== 'null') {
+function AuthRedirect({ children }) {
+  if (isLoggedIn()) {
     return <Navigate to="/dashboard" replace />
   }
 
-  return element
+  return children
 }
 
-const routes = [
+const router = createBrowserRouter([
   {
     path: '/',
-    element:
-      localStorage.getItem('token') &&
-      localStorage.getItem('token') !== 'undefined' &&
-      localStorage.getItem('token') !== 'null'
-        ? <Navigate to="/dashboard" replace />
-        : <LandingPage />,
-    protected: false,
+    element: isLoggedIn()
+      ? <Navigate to="/dashboard" replace />
+      : (
+        <PagesWrapper>
+          <Header />
+          <RouteTransition>
+            <LandingPage />
+          </RouteTransition>
+        </PagesWrapper>
+      ),
   },
+
   {
     path: '/auth',
-    element: <AuthRedirect element={<AuthPage />} />,
-    protected: false,
+    element: (
+      <AuthRedirect>
+        <PagesWrapper>
+          <Header />
+          <RouteTransition>
+            <AuthPage />
+          </RouteTransition>
+        </PagesWrapper>
+      </AuthRedirect>
+    ),
   },
+
   {
     path: '/dashboard',
-    element: <Dashboard />,
-    protected: true,
+    element: (
+      <ProtectedRoute>
+        <PagesWrapper>
+          <Header />
+          <RouteTransition>
+            <Dashboard />
+          </RouteTransition>
+        </PagesWrapper>
+      </ProtectedRoute>
+    ),
   },
+
   {
     path: '/add-transaction',
-    element: <AddTransaction />,
-    protected: true,
+    element: (
+      <ProtectedRoute>
+        <PagesWrapper>
+          <Header />
+          <RouteTransition>
+            <AddTransaction />
+          </RouteTransition>
+        </PagesWrapper>
+      </ProtectedRoute>
+    ),
   },
+
   {
     path: '/transactions',
-    element: <TransactionsHistory />,
-    protected: true,
+    element: (
+      <ProtectedRoute>
+        <PagesWrapper>
+          <Header />
+          <RouteTransition>
+            <TransactionsHistory />
+          </RouteTransition>
+        </PagesWrapper>
+      </ProtectedRoute>
+    ),
   },
+
   {
     path: '/analytics',
-    element: <Analytics />,
-    protected: true,
+    element: (
+      <ProtectedRoute>
+        <PagesWrapper>
+          <Header />
+          <RouteTransition>
+            <Analytics />
+          </RouteTransition>
+        </PagesWrapper>
+      </ProtectedRoute>
+    ),
   },
+
   {
     path: '/profile',
-    element: <ProfileSettings />,
-    protected: true,
-  },
-]
-
-const router = createBrowserRouter(
-  routes.map(({ path, element, protected: isProtected }) => ({
-    path,
     element: (
-      <PagesWrapper>
-        <Header />
-        <RouteTransition>
-          {isProtected ? <ProtectedRoute element={element} /> : element}
-        </RouteTransition>
-      </PagesWrapper>
+      <ProtectedRoute>
+        <PagesWrapper>
+          <Header />
+          <RouteTransition>
+            <ProfileSettings />
+          </RouteTransition>
+        </PagesWrapper>
+      </ProtectedRoute>
     ),
-  }))
-)
+  },
+])
 
 function App() {
   return <RouterProvider router={router} />
