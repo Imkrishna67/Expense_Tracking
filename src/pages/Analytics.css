@@ -1,0 +1,199 @@
+/* Analytics page */
+.analytics {
+  padding: 32px 40px 64px;
+}
+
+.analytics__inner {
+  max-width: 1126px;
+  margin: 0 auto;
+}
+
+.analytics__heading {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 28px;
+  color: var(--text-h);
+  letter-spacing: -0.5px;
+}
+
+/* ══════════════════════════════════
+   STATS SUMMARY
+══════════════════════════════════ */
+.stats-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stat-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 22px;
+  transition: box-shadow 0.22s ease, transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  &__icon {
+    font-size: 17px;
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  &__label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  &__value {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--text-h);
+    margin: 0 0 4px;
+  }
+
+  &__sub {
+    font-size: 12px;
+    color: var(--text);
+    margin: 0;
+  }
+}
+
+/* ══════════════════════════════════
+   CHARTS GRID
+══════════════════════════════════ */
+.analytics__grid {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  gap: 22px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Bar chart module ── */
+.monthly-bar-chart {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  &__title {
+    font-size: 17px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text-h);
+  }
+
+  &__subtitle {
+    font-size: 12.5px;
+    color: var(--text);
+  }
+}
+
+.monthly-bar-chart__legend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 12px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.chart-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.chart-legend__dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+
+  &--in  { background: #22c55e; }
+  &--out { background: #ef4444; }
+}
+
+/* ── Pie chart module ── */
+.category-pie-chart {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.category-pie-chart__header {
+  margin-bottom: 16px;
+}
+
+.category-pie-chart__title {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text-h);
+}
+
+/* ── Shared chart tooltip ── */
+.chart-tooltip {
+  background: var(--text-h);
+  color: var(--bg);
+  border-radius: 8px;
+  padding: 8px 14px;
+
+  &__label {
+    font-size: 12px;
+    margin: 0 0 3px;
+    opacity: 0.7;
+  }
+
+  &__value {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0;
+  }
+}

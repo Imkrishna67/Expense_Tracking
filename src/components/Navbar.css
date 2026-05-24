@@ -1,0 +1,100 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  padding: 0 24px;
+  height: 56px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.navbar__logo {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-h);
+  letter-spacing: -0.3px;
+}
+
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.navbar__btn {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+
+  &:hover  { opacity: 0.75; text-decoration: none; }
+  &:active { opacity: 0.6; }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+
+  &--ghost {
+    background: transparent;
+    color: var(--text-h);
+    border-color: var(--border);
+  }
+
+  &--primary {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  /* ── Theme toggle ── */
+  &--icon {
+    padding: 6px 10px;
+    border-color: var(--border);
+    color: var(--text-h);
+    line-height: 0;
+
+    &:hover {
+      opacity: 1;
+      background: var(--social-bg);
+      border-color: var(--accent-border);
+      color: var(--accent);
+    }
+  }
+
+  /* ── Avatar button ── */
+  &--avatar {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    padding: 0;
+    border-radius: 50%;
+    border: 2px solid var(--accent-border, rgba(170, 59, 255, 0.3));
+    background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%);
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    justify-content: center;
+    gap: 0;
+    box-shadow: 0 2px 8px rgba(170, 59, 255, 0.3);
+
+    &:hover {
+      opacity: 1;
+      border-color: var(--accent);
+      box-shadow: 0 4px 18px rgba(170, 59, 255, 0.42);
+      transform: scale(1.06);
+    }
+  }
+}
