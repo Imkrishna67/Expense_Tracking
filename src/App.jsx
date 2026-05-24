@@ -12,18 +12,34 @@ import './App.css'
 
 function ProtectedRoute({ element }) {
   const token = localStorage.getItem('token')
-  return token ? element : <Navigate to="/auth" replace />
+
+  if (!token || token === 'undefined' || token === 'null') {
+    localStorage.removeItem('token')
+    return <Navigate to="/auth" replace />
+  }
+
+  return element
 }
 
 function AuthRedirect({ element }) {
   const token = localStorage.getItem('token')
-  return token ? <Navigate to="/dashboard" replace /> : element
+
+  if (token && token !== 'undefined' && token !== 'null') {
+    return <Navigate to="/dashboard" replace />
+  }
+
+  return element
 }
 
 const routes = [
   {
     path: '/',
-    element: <LandingPage />,
+    element:
+      localStorage.getItem('token') &&
+      localStorage.getItem('token') !== 'undefined' &&
+      localStorage.getItem('token') !== 'null'
+        ? <Navigate to="/dashboard" replace />
+        : <LandingPage />,
     protected: false,
   },
   {
