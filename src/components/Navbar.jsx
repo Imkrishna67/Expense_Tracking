@@ -43,7 +43,7 @@ export default function Navbar() {
     token.trim() !== ''
 
   const handleLogout = () => {
-    localStorage.clear()
+    localStorage.removeItem('token')
     navigate('/auth', { replace: true })
     window.location.reload()
   }

@@ -10,16 +10,27 @@ import Analytics from './pages/Analytics'
 import ProfileSettings from './pages/ProfileSettings'
 import './App.css'
 
-function ProtectedRoute({ children }) {
+function isAuthenticated() {
   const token = localStorage.getItem('token')
 
-  return token ? children : <Navigate to="/auth" replace />
+  return (
+    token &&
+    token !== 'undefined' &&
+    token !== 'null' &&
+    token.trim() !== ''
+  )
+}
+
+function ProtectedRoute({ children }) {
+  return isAuthenticated()
+    ? children
+    : <Navigate to="/auth" replace />
 }
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: localStorage.getItem('token')
+    element: isAuthenticated()
       ? <Navigate to="/dashboard" replace />
       : (
         <PagesWrapper>
@@ -33,7 +44,7 @@ const router = createBrowserRouter([
 
   {
     path: '/auth',
-    element: localStorage.getItem('token')
+    element: isAuthenticated()
       ? <Navigate to="/dashboard" replace />
       : (
         <PagesWrapper>
