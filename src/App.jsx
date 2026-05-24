@@ -15,6 +15,11 @@ function ProtectedRoute({ element }) {
   return token ? element : <Navigate to="/auth" replace />
 }
 
+function AuthRedirect({ element }) {
+  const token = localStorage.getItem('token')
+  return token ? <Navigate to="/dashboard" replace /> : element
+}
+
 const routes = [
   {
     path: '/',
@@ -23,7 +28,7 @@ const routes = [
   },
   {
     path: '/auth',
-    element: <AuthPage />,
+    element: <AuthRedirect element={<AuthPage />} />,
     protected: false,
   },
   {
